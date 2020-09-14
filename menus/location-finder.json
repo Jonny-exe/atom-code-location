@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle location-finder",
+        "command": "location-finder:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "location-finder",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "location-finder:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
