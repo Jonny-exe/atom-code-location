@@ -1,14 +1,14 @@
 {
-  "name": "location-finder",
-  "main": "./lib/location-finder",
+  "name": "my-package-test",
+  "main": "./lib/my-package-test",
   "version": "0.0.0",
   "description": "A short description of your package",
   "keywords": [
   ],
   "activationCommands": {
-    "atom-workspace": "location-finder:toggle"
+    "atom-workspace": "my-package-test:toggle"
   },
-  "repository": "https://github.com/atom/location-finder",
+  "repository": "https://github.com/atom/my-package-test",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

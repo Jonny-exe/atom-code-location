@@ -1,4 +1,4 @@
-# location-finder package
+# my-package-test package
 
 A short description of your package.
 

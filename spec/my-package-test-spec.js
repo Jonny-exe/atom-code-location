@@ -1,44 +1,44 @@
 'use babel';
 
-import LocationFinder from '../lib/location-finder';
+import MyPackageTest from '../lib/my-package-test';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
 // To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe('LocationFinder', () => {
+describe('MyPackageTest', () => {
   let workspaceElement, activationPromise;
 
   beforeEach(() => {
     workspaceElement = atom.views.getView(atom.workspace);
-    activationPromise = atom.packages.activatePackage('location-finder');
+    activationPromise = atom.packages.activatePackage('my-package-test');
   });
 
-  describe('when the location-finder:toggle event is triggered', () => {
+  describe('when the my-package-test:toggle event is triggered', () => {
     it('hides and shows the modal panel', () => {
       // Before the activation event the view is not on the DOM, and no panel
       // has been created
-      expect(workspaceElement.querySelector('.location-finder')).not.toExist();
+      expect(workspaceElement.querySelector('.my-package-test')).not.toExist();
 
       // This is an activation event, triggering it will cause the package to be
       // activated.
-      atom.commands.dispatch(workspaceElement, 'location-finder:toggle');
+      atom.commands.dispatch(workspaceElement, 'my-package-test:toggle');
 
       waitsForPromise(() => {
         return activationPromise;
       });
 
       runs(() => {
-        expect(workspaceElement.querySelector('.location-finder')).toExist();
+        expect(workspaceElement.querySelector('.my-package-test')).toExist();
 
-        let locationFinderElement = workspaceElement.querySelector('.location-finder');
-        expect(locationFinderElement).toExist();
+        let myPackageTestElement = workspaceElement.querySelector('.my-package-test');
+        expect(myPackageTestElement).toExist();
 
-        let locationFinderPanel = atom.workspace.panelForItem(locationFinderElement);
-        expect(locationFinderPanel.isVisible()).toBe(true);
-        atom.commands.dispatch(workspaceElement, 'location-finder:toggle');
-        expect(locationFinderPanel.isVisible()).toBe(false);
+        let myPackageTestPanel = atom.workspace.panelForItem(myPackageTestElement);
+        expect(myPackageTestPanel.isVisible()).toBe(true);
+        atom.commands.dispatch(workspaceElement, 'my-package-test:toggle');
+        expect(myPackageTestPanel.isVisible()).toBe(false);
       });
     });
 
@@ -51,11 +51,11 @@ describe('LocationFinder', () => {
       // workspaceElement to the DOM are generally slower than those off DOM.
       jasmine.attachToDOM(workspaceElement);
 
-      expect(workspaceElement.querySelector('.location-finder')).not.toExist();
+      expect(workspaceElement.querySelector('.my-package-test')).not.toExist();
 
       // This is an activation event, triggering it causes the package to be
       // activated.
-      atom.commands.dispatch(workspaceElement, 'location-finder:toggle');
+      atom.commands.dispatch(workspaceElement, 'my-package-test:toggle');
 
       waitsForPromise(() => {
         return activationPromise;
@@ -63,10 +63,10 @@ describe('LocationFinder', () => {
 
       runs(() => {
         // Now we can test for view visibility
-        let locationFinderElement = workspaceElement.querySelector('.location-finder');
-        expect(locationFinderElement).toBeVisible();
-        atom.commands.dispatch(workspaceElement, 'location-finder:toggle');
-        expect(locationFinderElement).not.toBeVisible();
+        let myPackageTestElement = workspaceElement.querySelector('.my-package-test');
+        expect(myPackageTestElement).toBeVisible();
+        atom.commands.dispatch(workspaceElement, 'my-package-test:toggle');
+        expect(myPackageTestElement).not.toBeVisible();
       });
     });
   });

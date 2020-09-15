@@ -2,8 +2,8 @@
   "context-menu": {
     "atom-text-editor": [
       {
-        "label": "Toggle location-finder",
-        "command": "location-finder:toggle"
+        "label": "Toggle my-package-test",
+        "command": "my-package-test:toggle"
       }
     ]
   },
@@ -12,11 +12,11 @@
       "label": "Packages",
       "submenu": [
         {
-          "label": "location-finder",
+          "label": "my-package-test",
           "submenu": [
             {
               "label": "Toggle",
-              "command": "location-finder:toggle"
+              "command": "my-package-test:toggle"
             }
           ]
         }
