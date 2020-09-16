@@ -47,9 +47,7 @@ export default {
   },
 
   consumeStatusBar(statusBar) {
-    console.log('Status bar got called');
     this.MyPackageTestView = new MyPackageTestView(statusBar);
-    console.log('Status bar activated');
   }
 
 
