@@ -24,6 +24,7 @@ export default class MyPackageTestView {
     element.classList.add('inline-block');
     element.classList.add('element');
     enders = [")", '}', ']'];
+    separator = "> "
     stop = false;
     this.onPositionChange = new onPositionChange(statusBar);
     this.onChange = new onChange(statusBar);
@@ -44,6 +45,7 @@ class onChange {
     editor.onDidChangeCursorPosition(
       function(event) {
         new onPositionChange(statusBar);
+        stop = false;
       }
     );
   }
@@ -60,19 +62,18 @@ class onPositionChange {
     this.marker = editor.markBufferPosition(thisPoint);
     this.statusBar = statusBar;
     lastIndentation = null;
+    displayElement = [];
+    displayString = "";
+    notEmpty = true;
+    lastElement = "";
     this.setStatusBar();
-    this.getResult();
-    lastIndentation = this.getIndentation();
+    // this.getResult();
     // this.onchange();
   }
 
   setStatusBar(event) {
     //Create all the elements to display the number in the status bar
-
-
-
-    const content = this.getIndentation();
-
+    const content = this.getResult();
     element.textContent = content;
     this.statusBar.addLeftTile({
       item: element,
@@ -146,56 +147,79 @@ class onPositionChange {
     return this.marker.getHeadBufferPosition();
   }
 
-  getCurrentBufferLine() {
-    return editor.lineTextForBufferRow(this.getBufferRow());
+  getCurrentBufferLine(point) {
+    return editor.lineTextForBufferRow(point);
   }
 
-  getCurrentBufferLineTwo(row) {
-    return editor.lineTextForBufferRow(this.getBufferRow());
-  }
-
-  getIndentation(point) {
+  getIndentation(point, currentBufferLine) {
     // console.log('this is the get inddentation point: ' + point);
-    if (this.getCurrentBufferLine(point)[0] != "") {
-      console.log('this is the point in the indentation: ' + point);
+    if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
+
       return this.getIntentLevel(this.getCurrentBufferLine(point), 1);
-    } else return 'Empty';
+    } else if (this.getCurrentBufferLine(newPoint)[0] == "") {
+      return 'Empty';
+    } else {
+      return 0;
+    }
   }
 
   getIndentationTwo(point) {
-    if (this.getCurrentBufferLine(newPoint) != "" && this.getCurrentBufferLine(newPoint)[0] == " ") {
-      console.log(newPoint);
-      return this.getIntentLevel(this.getCurrentBufferLine(newPoint), 1);
-    } else return 0;
+    if (getCurrentBufferLine != "" && getCurrentBufferLine[0] == " ") {
+      return this.getIntentLevel(getCurrentBufferLine, 1);
+    } else if (getCurrentBufferLine[0] == "") {
+      return 'Empty';
+    } else {
+      return 0;
+    }
   }
 
   getResult(point) {
-    if (this.getIndentation() != 0 || (this.getIndentation() == 0 && this.getCurrentBufferLine() != "")) {
+    newPoint = this.getBufferRow();
+    getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+    getIndentation = this.getIndentation(newPoint, getCurrentBufferLine);
+
+    if (getIndentation != 0 || (getIndentation == 0 && this.getCurrentBufferLine() != "")) {
       newPoint = this.getBufferRow();
+      lastIndentation = getIndentation;
       while (stop == false) {
-        console.log('in the while loop');
-        newPoint = newPoint - 1;
-        console.log("this is the newPoint var: " + newPoint);
-        console.log("this is the indentation; " + this.getIndentation(newPoint));
-        if (this.getIndentation() == 0 && this.getCurrentBufferLine() != "") {
-          console.log('stop');
+        getIndentation = this.getIndentation(newPoint);
+        getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+
+        if (getIndentation == 0 && getCurrentBufferLine != "") {
+          console.log('stop 1');
           stop = true;
         }
         if (newPoint == 0 || newPoint < 0) {
-          console.log('stop');
+          console.log('stop 2');
           stop = true;
         }
-
-        if (((this.getIndentation() < lastIndentation) && this.getCurrentBufferLine(newPoint) != "") || lastIndentation == null) {
-          lastIndentation = this.getIndentation(newPoint);
-          console.log("this is the lastIndentation; " + lastIndentation);
-          this.getCurrentBufferLine(newPoint);
+        if ((getIndentation < lastIndentation) && getCurrentBufferLine != "") {
+          lastIndentation = getIndentation;
+          splitLine = getCurrentBufferLine.split(" ");
+          console.log(splitLine);
+          num = 0;
+          while (notEmpty) {
+            lastElement = splitLine[num];
+            if (lastElement != "") {
+              notEmpty = false;
+            }
+            num++;
+          }
+          notEmpty = true;
+          console.log(lastElement);
+          displayElement.push(lastElement);
+          console.log(displayElement);
           console.log('hi' + newPoint);
-        } else {
-
         }
+        newPoint--;
       }
     }
+    displayElement.reverse();
+    for (let i = 0; i < displayElement.length; i++) {
+      displayString += displayElement[i] + separator;
+    }
+    // displayString = JSON.stringify(displayElement);
+    return displayString;
   }
 
   testFunction(ev) {}
