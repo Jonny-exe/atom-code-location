@@ -24,7 +24,7 @@ export default class MyPackageTestView {
     element.classList.add('inline-block');
     element.classList.add('element');
     enders = [")", '}', ']'];
-    separator = "> "
+    separator = " → "
     stop = false;
     this.onPositionChange = new onPositionChange(statusBar);
     this.onChange = new onChange(statusBar);
@@ -40,9 +40,18 @@ class onChange {
     this.emitter = new Emitter();
     this.statusBar = statusBar;
     this.onchange(this.statusBar);
+    // this.onPanelChange(this.statusBar);
   }
   onchange(statusBar) {
     editor.onDidChangeCursorPosition(
+      function(event) {
+        new onPositionChange(statusBar);
+        stop = false;
+      }
+    );
+  }
+onPanelChange(statusBar) {
+    editor.onDidChangeActivePaneItem(
       function(event) {
         new onPositionChange(statusBar);
         stop = false;
