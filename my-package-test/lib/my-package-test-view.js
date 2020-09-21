@@ -4,7 +4,8 @@ const {
   Point,
   Emitter,
   Cursor,
-  TextEditor
+  TextEditor,
+  Disposable
 } = require('atom');
 
 module.exports = class Entry {
@@ -23,7 +24,8 @@ export default class MyPackageTestView {
     element = document.createElement('div');
     element.classList.add('inline-block');
     element.classList.add('element');
-    enders = [")", '}', ']'];
+    enders = "()[]{}"
+    console.log(enders);
     separator = " → "
     stop = false;
     this.onPositionChange = new onPositionChange(statusBar);
@@ -35,12 +37,11 @@ export default class MyPackageTestView {
 
 class onChange {
   constructor(statusBar, point, cursor) {
-
     this.subscriptions = new CompositeDisposable();
     this.emitter = new Emitter();
     this.statusBar = statusBar;
     this.onchange(this.statusBar);
-    // this.onPanelChange(this.statusBar);
+    this.onPanelChange(this.statusBar);
   }
   onchange(statusBar) {
     editor.onDidChangeCursorPosition(
@@ -50,13 +51,27 @@ class onChange {
       }
     );
   }
-onPanelChange(statusBar) {
-    editor.onDidChangeActivePaneItem(
-      function(event) {
-        new onPositionChange(statusBar);
-        stop = false;
+  onPanelChange(statusBar) {
+    atom.workspace.onDidChangeActivePaneItem(
+      function() {
+        editor = atom.workspace.getActiveTextEditor();
+        editor.onDidChangeCursorPosition(
+          function(event) {
+            new onPositionChange(statusBar);
+            stop = false;
+          }
+        );
       }
     );
+  }
+  dispose() {
+    if (!this.disposed) {
+      this.disposed = true
+      if (typeof this.disposalAction === "function") {
+        this.disposalAction()
+      }
+      this.disposalAction = null
+    }
   }
 }
 
@@ -152,6 +167,10 @@ class onPositionChange {
     return this.getBufferPosition().row;
   }
 
+  getBufferColumn() {
+    return this.getBufferPosition().column;
+  }
+
   getBufferPosition(point) {
     return this.marker.getHeadBufferPosition();
   }
@@ -160,7 +179,7 @@ class onPositionChange {
     return editor.lineTextForBufferRow(point);
   }
 
-  getIndentation(point, currentBufferLine) {
+  getIndentation(point) {
     // console.log('this is the get inddentation point: ' + point);
     if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
 
@@ -172,28 +191,39 @@ class onPositionChange {
     }
   }
 
-  getIndentationTwo(point) {
-    if (getCurrentBufferLine != "" && getCurrentBufferLine[0] == " ") {
-      return this.getIntentLevel(getCurrentBufferLine, 1);
-    } else if (getCurrentBufferLine[0] == "") {
-      return 'Empty';
-    } else {
-      return 0;
+  getFirstWord() {
+    lastIndentation = getIndentation;
+    splitLine = getCurrentBufferLine.split(" ");
+    num = 0;
+    while (notEmpty) {
+      lastElement = splitLine[num];
+      if (lastElement != "") {
+        notEmpty = false;
+      }
+      num++;
     }
+    notEmpty = true;
+    return lastElement
   }
+
 
   getResult(point) {
     newPoint = this.getBufferRow();
+    newCollum = this.getBufferColumn();
     getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
     getIndentation = this.getIndentation(newPoint, getCurrentBufferLine);
-
     if (getIndentation != 0 || (getIndentation == 0 && this.getCurrentBufferLine() != "")) {
       newPoint = this.getBufferRow();
       lastIndentation = getIndentation;
+      console.log(newCollum + " line: " + getCurrentBufferLine.length)
+      if ((this.getIndentation(newPoint + 1) > getIndentation) &&
+        enders.includes(getCurrentBufferLine[getCurrentBufferLine.length - 1]) &&
+        newCollum == getCurrentBufferLine.length) {
+        displayElement.push(this.getFirstWord());
+      }
       while (stop == false) {
         getIndentation = this.getIndentation(newPoint);
         getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
-
         if (getIndentation == 0 && getCurrentBufferLine != "") {
           console.log('stop 1');
           stop = true;
@@ -203,22 +233,7 @@ class onPositionChange {
           stop = true;
         }
         if ((getIndentation < lastIndentation) && getCurrentBufferLine != "") {
-          lastIndentation = getIndentation;
-          splitLine = getCurrentBufferLine.split(" ");
-          console.log(splitLine);
-          num = 0;
-          while (notEmpty) {
-            lastElement = splitLine[num];
-            if (lastElement != "") {
-              notEmpty = false;
-            }
-            num++;
-          }
-          notEmpty = true;
-          console.log(lastElement);
-          displayElement.push(lastElement);
-          console.log(displayElement);
-          console.log('hi' + newPoint);
+          displayElement.push(this.getFirstWord());
         }
         newPoint--;
       }
