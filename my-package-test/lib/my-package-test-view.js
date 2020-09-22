@@ -1,5 +1,8 @@
 'use babel';
 /*jshint esversion: 6 */
+
+//import all necesary stuff
+
 const {
   CompositeDisposable,
   Point,
@@ -9,25 +12,15 @@ const {
   Disposable
 } = require('atom');
 
-module.exports = class Entry {
-
-  static deserialize(state) {
-    return new Entry({
-      editor: itemForURI(state.URI),
-      point: Point.fromObject(state.point),
-      URI: state.URI
-    })
-  }
-};
-
+// This is the only class I call from the other file
+// Here I define some base vars and I call the onchange classes
 export default class MyPackageTestView {
   constructor(statusBar, point, cursor) {
     element = document.createElement('div');
     element.classList.add('inline-block');
     element.classList.add('element');
-    enders = "()[]{}"
-    console.log(enders);
-    separator = " → "
+    enders = "()[]{}";
+    separator = " → ";
     stop = false;
     this.onPositionChange = new onPositionChange(statusBar);
     this.onChange = new onChange(statusBar);
@@ -35,6 +28,8 @@ export default class MyPackageTestView {
 
   }
 }
+
+// This is the onChange class, here I do and onCursorChange and a on panelChange
 
 class onChange {
   constructor(statusBar, point, cursor) {
@@ -45,12 +40,14 @@ class onChange {
     this.onPanelChange(this.statusBar);
   }
   onchange(statusBar) {
-    editor.onDidChangeCursorPosition(
-      function(event) {
-        new onPositionChange(statusBar);
-        stop = false;
-      }
-    );
+    if (editor != undefined) {
+      editor.onDidChangeCursorPosition(
+        function(event) {
+          new onPositionChange(statusBar);
+          stop = false;
+        }
+      );
+    } else console.log('undefined');
   }
   onPanelChange(statusBar) {
     atom.workspace.onDidChangeActivePaneItem(
@@ -63,45 +60,55 @@ class onChange {
               stop = false;
             }
           );
-        } else {
-          console.log('undefined');
         }
       }
     );
   }
   dispose() {
     if (!this.disposed) {
-      this.disposed = true
+      this.disposed = true;
       if (typeof this.disposalAction === "function") {
-        this.disposalAction()
+        this.disposalAction();
       }
-      this.disposalAction = null
+      this.disposalAction = null;
     }
   }
 }
 
+// This is the class to get the location
+
 class onPositionChange {
 
+  // I define some base vars, that have to be updated: markerPosition, editor...
+
   constructor(statusBar, point, cursor) {
+    dontStop = true;
     this.subscriptions = new CompositeDisposable();
     this.emitter = new Emitter();
     editor = atom.workspace.getActiveTextEditor();
     this.editor = editor;
-    thisPoint = editor.getCursorBufferPosition();
-    this.marker = editor.markBufferPosition(thisPoint);
+    if(editor != undefined) {
+      thisPoint = editor.getCursorBufferPosition();
+      this.marker = editor.markBufferPosition(thisPoint);
+    } else dontStop = false;
     this.statusBar = statusBar;
     lastIndentation = null;
+    notEmpty = true;
     displayElement = [];
     displayString = "";
-    notEmpty = true;
     lastElement = "";
-    this.setStatusBar();
-    // this.getResult();
-    // this.onchange();
+
+    // If the editor is not a writeable pane it wont start
+
+    if (dontStop) {
+      this.setStatusBar();
+    }
   }
 
   setStatusBar(event) {
-    //Create all the elements to display the number in the status bar
+
+    // Here I insert the value into the statusBar
+
     const content = this.getResult();
     element.textContent = content;
     this.statusBar.addLeftTile({
@@ -109,11 +116,6 @@ class onPositionChange {
       priority: 1000
     });
   }
-
-  // onchange() {
-  //   console.log("Editor changed");
-  //   editor.onDidChangeCursorPosition(this.setStatusBar);
-  // }
 
   destroy() {
     this.element.remove();
@@ -184,10 +186,10 @@ class onPositionChange {
     return editor.lineTextForBufferRow(point);
   }
 
-  getIndentation(point) {
-    // console.log('this is the get inddentation point: ' + point);
-    if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
+  // The main function to get the indentation
 
+  getIndentation(point) {
+    if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
       return this.getIntentLevel(this.getCurrentBufferLine(point), 1);
     } else if (this.getCurrentBufferLine(newPoint)[0] == "") {
       return 'Empty';
@@ -195,6 +197,8 @@ class onPositionChange {
       return 0;
     }
   }
+
+  // This is only if the cursor is on a line that ends with ),}
 
   getFirstWord() {
     lastIndentation = getIndentation;
@@ -208,33 +212,35 @@ class onPositionChange {
       num++;
     }
     notEmpty = true;
-    return lastElement
+    return lastElement;
   }
 
+  // This gets the location
 
   getResult(point) {
     newPoint = this.getBufferRow();
     newCollum = this.getBufferColumn();
     getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
     getIndentation = this.getIndentation(newPoint, getCurrentBufferLine);
+
     if (getIndentation != 0 || (getIndentation == 0 && this.getCurrentBufferLine() != "")) {
       newPoint = this.getBufferRow();
       lastIndentation = getIndentation;
-      console.log(newCollum + " line: " + getCurrentBufferLine.length)
+
       if ((this.getIndentation(newPoint + 1) > getIndentation) &&
         enders.includes(getCurrentBufferLine[getCurrentBufferLine.length - 1]) &&
         newCollum == getCurrentBufferLine.length) {
         displayElement.push(this.getFirstWord());
       }
-      while (stop == false) {
+
+      while (!stop) {
         getIndentation = this.getIndentation(newPoint);
         getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+
         if (getIndentation == 0 && getCurrentBufferLine != "") {
-          console.log('stop 1');
           stop = true;
         }
         if (newPoint == 0 || newPoint < 0) {
-          console.log('stop 2');
           stop = true;
         }
         if ((getIndentation < lastIndentation) && getCurrentBufferLine != "") {
@@ -243,28 +249,19 @@ class onPositionChange {
         newPoint--;
       }
     }
+
+    //This is to get all the elements a put them in a string
+
     displayElement.reverse();
+
     for (let i = 0; i < displayElement.length; i++) {
       displayString += displayElement[i] + separator;
     }
-    // displayString = JSON.stringify(displayElement);
+
+    // returns the value that goes in the statusBar
+
     return displayString;
+
   }
 
-  testFunction(ev) {}
-
-  getNewValue() {
-    this.onPositionChange = new newOnchange(this.statusBar);
-  }
-  //
-  onDidChangeCursorPosition(callback) {
-    return this.emitter.on('did-change-cursor-position', this.getNewValue);
-  }
-
-  onchange(mycallback) {
-    editor.onDidChangeCursorPosition(
-      function(event) {
-        mycallback(event)
-      });
-  }
 }
