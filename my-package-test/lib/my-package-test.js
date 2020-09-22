@@ -1,4 +1,5 @@
 'use babel';
+/*jshint esversion: 6 */
 
 import MyPackageTestView from './my-package-test-view';
 import onPositionChange from './my-package-test-view';

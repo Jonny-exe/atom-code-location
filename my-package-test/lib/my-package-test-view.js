@@ -1,4 +1,5 @@
 'use babel';
+/*jshint esversion: 6 */
 const {
   CompositeDisposable,
   Point,
@@ -55,12 +56,16 @@ class onChange {
     atom.workspace.onDidChangeActivePaneItem(
       function() {
         editor = atom.workspace.getActiveTextEditor();
-        editor.onDidChangeCursorPosition(
-          function(event) {
-            new onPositionChange(statusBar);
-            stop = false;
-          }
-        );
+        if (editor != undefined) {
+          editor.onDidChangeCursorPosition(
+            function(event) {
+              new onPositionChange(statusBar);
+              stop = false;
+            }
+          );
+        } else {
+          console.log('undefined');
+        }
       }
     );
   }
