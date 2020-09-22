@@ -4,6 +4,10 @@ This is a atom tool to see on which point of your code-tree you are. You can get
 
 ![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/Atom-location-finder/master/my-package-test/StatusBarLocation.png)
 
+# Features 
+- You can get where you are in your code, so you dont get messed up if you have a complicate code.
+- You can get what indentation your current line has.
+
 # How to install
 
 - Via the atom package manager (`apm`):
