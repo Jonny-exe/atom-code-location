@@ -1,10 +1,17 @@
 {
-  "name": "my-package-test",
-  "main": "./lib/my-package-test",
+  "name": "code-location",
+  "main": "./lib/code-location",
   "version": "0.0.0",
-  "description": "A short description of your package",
-  "keywords": [],
-  "repository": "https://github.com/atom/my-package-test",
+  "description": "It's a tool to know where you are in your code",
+  "keywords": [
+              location,
+              tree,
+              code,
+              path,
+              editor,
+              incode
+            ],
+  "repository": "https://github.com/Jonny-exe/Atom-code-location/tree/master/my-package-test",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

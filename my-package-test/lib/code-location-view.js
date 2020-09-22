@@ -14,7 +14,7 @@ const {
 
 // This is the only class I call from the other file
 // Here I define some base vars and I call the onchange classes
-export default class MyPackageTestView {
+export default class CodeLocation {
   constructor(statusBar, point, cursor) {
     element = document.createElement('div');
     element.classList.add('inline-block');
