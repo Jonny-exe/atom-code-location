@@ -7,8 +7,10 @@
     "location",
     "tree",
     "code",
-    "path",
     "editor",
+    "statusbar",
+    "status-bar",
+    "indentation",
     "incode"
   ],
   "repository": {
