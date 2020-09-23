@@ -1,6 +1,6 @@
 # code-location atom package
 
-This is a atom tool to see on which point of your code-tree you are. You can get in which tree section you are.
+code-location is a tool that lets you know where you are in your code, by showing you your location (class, function, etc.) in the status bar of the Atom editor.
 
 ![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/Atom-location-finder/master/my-package-test/StatusBarLocation.png)
 
