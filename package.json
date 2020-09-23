@@ -17,10 +17,6 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Jonny-exe/multi-copy-paste-clipboard.git"
-  },
   "consumedServices": {
     "status-bar": {
       "versions": {
