@@ -1,13 +1,10 @@
 {
   "name": "code-location",
   "main": "./lib/code-location",
-<<<<<<< HEAD
   "version": "1.0.0",
   "description": "It's a tool to know where you are in your code",
-=======
   "version": "0.0.0",
   "description": "code-location is a tool that lets you know where you are in your code, by showing you your location (class, function, etc.) in the status bar of the Atom editor.",
->>>>>>> 35676b3bd553e9ac94841f76b2ca9c9a94f92417
   "keywords": [
     "location",
     "tree",
@@ -22,13 +19,10 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {},
-<<<<<<< HEAD
-=======
   "repository": {
     "type": "git",
     "url": "git@github.com:Jonny-exe/multi-copy-paste-clipboard.git"
   },
->>>>>>> 35676b3bd553e9ac94841f76b2ca9c9a94f92417
   "consumedServices": {
     "status-bar": {
       "versions": {
