@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonny-exe/atom-code-location.git"
+    "url": "git@github.com:Jonny-exe/atom-code-location.git"
   },
   "license": "MIT",
   "engines": {
