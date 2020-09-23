@@ -1,7 +1,7 @@
 {
   "name": "code-location",
   "main": "./lib/code-location",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "code-location is a tool that lets you know where you are in your code, by showing you your location (class, function, etc.) in the status bar of the Atom editor.",
   "keywords": [
     "location",
