@@ -9,11 +9,11 @@ Use a code beautifier to make sure your indentation is correct. If the indentati
 
 Editor:
 
-![A screenshot of your package](images/Function_screenshot.png)
+![Editor Screenshot](images/Function_screenshot.png)
 
 Status-bar:
 
-![A screenshot of your package](images/StatusBarLocation.png)
+![Statusbar Screenshot](images/StatusBarLocation-big.png)
 
 As seen in this example, the current cursor is inside a `class`, then within a function called `getResult()`, therein 
 inside an `if`, and lastly inside a `while` loop.
