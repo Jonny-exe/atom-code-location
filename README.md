@@ -3,14 +3,14 @@
 code-location is a tool that lets you know where you are in your code, by showing you your location (class, function, etc.) in the status bar of the Atom editor.
 This works with the indentation, so if the indentation is incorrect it wont well.
 
-![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/atom-code-location/master/Function_screenshot.png)
-![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/atom-code-location/master/StatusBarLocation.png)
+![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/atom-code-location/master/images/Function_screenshot.png)
+![A screenshot of your package](https://raw.githubusercontent.com/Jonny-exe/atom-code-location/master/images/StatusBarLocation.png)
 
 # Example
 
 As seen in this example, the current cursor is inside a class, then within a function called getResult(), therein inside an if, and lastly inside a while loop.
 
-# Features 
+# Features
 - You can get where you are in your code, so you dont get messed up if you have a complicate code.
 - You can get what indentation your current line has.
 
