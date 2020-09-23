@@ -14,6 +14,7 @@ const {
 
 // This is the only class I call from the other file
 // Here I define some base vars and I call the onchange classes
+
 export default class CodeLocation {
   constructor(statusBar, point, cursor) {
     element = document.createElement('div');
@@ -24,6 +25,7 @@ export default class CodeLocation {
     stop = false;
     this.onPositionChange = new onPositionChange(statusBar);
     this.onChange = new onChange(statusBar);
+
     // this.onPositionChange.onchange(this.onPositionChange.onchange(this.onPositionChange.setStatusBar));
 
   }
@@ -87,7 +89,7 @@ class onPositionChange {
     this.emitter = new Emitter();
     editor = atom.workspace.getActiveTextEditor();
     this.editor = editor;
-    if(editor != undefined) {
+    if (editor != undefined) {
       thisPoint = editor.getCursorBufferPosition();
       this.marker = editor.markBufferPosition(thisPoint);
     } else dontStop = false;
@@ -189,79 +191,82 @@ class onPositionChange {
   // The main function to get the indentation
 
   getIndentation(point) {
-    if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
-      return this.getIntentLevel(this.getCurrentBufferLine(point), 1);
-    } else if (this.getCurrentBufferLine(newPoint)[0] == "") {
-      return 'Empty';
-    } else {
-      return 0;
-    }
-  }
+    if (this.getCurrentBufferLine(point) != undefined) {
 
-  // This is only if the cursor is on a line that ends with ),}
-
-  getFirstWord() {
-    lastIndentation = getIndentation;
-    splitLine = getCurrentBufferLine.split(" ");
-    num = 0;
-    while (notEmpty) {
-      lastElement = splitLine[num];
-      if (lastElement != "") {
-        notEmpty = false;
+        if (this.getCurrentBufferLine(point)[0] != "" && this.getCurrentBufferLine(point)[0] == ' ') {
+          return this.getIntentLevel(this.getCurrentBufferLine(point), 1);
+        } else if (this.getCurrentBufferLine(newPoint)[0] == "") {
+          return 'Empty';
+        } else {
+          return 0;
+        }
       }
-      num++;
     }
-    notEmpty = true;
-    return lastElement;
-  }
 
-  // This gets the location
+    // This is only if the cursor is on a line that ends with ),}
 
-  getResult(point) {
-    newPoint = this.getBufferRow();
-    newCollum = this.getBufferColumn();
-    getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
-    getIndentation = this.getIndentation(newPoint, getCurrentBufferLine);
-
-    if (getIndentation != 0 || (getIndentation == 0 && this.getCurrentBufferLine() != "")) {
-      newPoint = this.getBufferRow();
+    getFirstWord() {
       lastIndentation = getIndentation;
-
-      if ((this.getIndentation(newPoint + 1) > getIndentation) &&
-        enders.includes(getCurrentBufferLine[getCurrentBufferLine.length - 1]) &&
-        newCollum == getCurrentBufferLine.length) {
-        displayElement.push(this.getFirstWord());
+      splitLine = getCurrentBufferLine.split(" ");
+      num = 0;
+      while (notEmpty) {
+        lastElement = splitLine[num];
+        if (lastElement != "") {
+          notEmpty = false;
+        }
+        num++;
       }
+      notEmpty = true;
+      return lastElement;
+    }
 
-      while (!stop) {
-        getIndentation = this.getIndentation(newPoint);
-        getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+    // This gets the location
 
-        if (getIndentation == 0 && getCurrentBufferLine != "") {
-          stop = true;
-        }
-        if (newPoint == 0 || newPoint < 0) {
-          stop = true;
-        }
-        if ((getIndentation < lastIndentation) && getCurrentBufferLine != "") {
+    getResult(point) {
+      newPoint = this.getBufferRow();
+      newCollum = this.getBufferColumn();
+      getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+      getIndentation = this.getIndentation(newPoint);
+
+      if (getIndentation != 0 || (getIndentation == 0 && this.getCurrentBufferLine() != "")) {
+        newPoint = this.getBufferRow();
+        lastIndentation = getIndentation;
+
+        if ((this.getIndentation(newPoint + 1) > getIndentation) &&
+          enders.includes(getCurrentBufferLine[getCurrentBufferLine.length - 1]) &&
+          newCollum == getCurrentBufferLine.length) {
           displayElement.push(this.getFirstWord());
         }
-        newPoint--;
+
+        while (!stop) {
+          getIndentation = this.getIndentation(newPoint);
+          getCurrentBufferLine = this.getCurrentBufferLine(newPoint);
+
+          if (getIndentation == 0 && getCurrentBufferLine != "") {
+            stop = true;
+          }
+          if (newPoint == 0 || newPoint < 0) {
+            stop = true;
+          }
+          if ((getIndentation < lastIndentation) && getCurrentBufferLine != "") {
+            displayElement.push(this.getFirstWord());
+          }
+          newPoint--;
+        }
       }
+
+      //This is to get all the elements a put them in a string
+
+      displayElement.reverse();
+
+      for (let i = 0; i < displayElement.length; i++) {
+        displayString += displayElement[i] + separator;
+      }
+
+      // returns the value that goes in the statusBar
+
+      return displayString;
+
     }
-
-    //This is to get all the elements a put them in a string
-
-    displayElement.reverse();
-
-    for (let i = 0; i < displayElement.length; i++) {
-      displayString += displayElement[i] + separator;
-    }
-
-    // returns the value that goes in the statusBar
-
-    return displayString;
 
   }
-
-}
