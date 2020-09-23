@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "description": "It's a tool to know where you are in your code",
   "keywords": [
-              location,
-              tree,
-              code,
-              path,
-              editor,
-              incode
+              "location",
+              "tree",
+              "code",
+              "path",
+              "editor",
+              "incode"
             ],
   "repository": "https://github.com/Jonny-exe/Atom-code-location/tree/master/my-package-test",
   "license": "MIT",
