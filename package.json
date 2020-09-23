@@ -11,7 +11,7 @@
               "editor",
               "incode"
             ],
-  "repository": "https://github.com/Jonny-exe/Atom-code-location/tree/master/my-package-test",
+  "repository": "https://github.com/Jonny-exe/atom-code-location.git",,
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
