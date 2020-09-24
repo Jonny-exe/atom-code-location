@@ -37,4 +37,4 @@ inside an `if`, and lastly inside a `while` loop.
 
 # Package for `atom`
 
-![Atom logo](https://dl2.macupdate.com/images/icons256/53196.png?d=1518722998)
+![Atom logo](https://github.githubassets.com/images/icons/emoji/atom.png)
