@@ -9,14 +9,18 @@ Use a code beautifier to make sure your indentation is correct. If the indentati
 
 Editor:
 
-![Editor Screenshot](images/Function_screenshot.png)
+![Editor Screenshot](images/Screenshot-js2-example.png)
 
 Status-bar:
 
-![Statusbar Screenshot](images/StatusBarLocation-big.png)
+`class` :arrow_right: `getResult(point)` :arrow_right: `if` :arrow_right: `while` 
 
 As seen in this example, the current cursor is inside a `class`, then within a function called `getResult()`, therein 
 inside an `if`, and lastly inside a `while` loop.
+
+# Example JavaScript
+
+![Editor Screenshot](images/Screenshot-js1-example.png)
 
 # Features
 - You can more easily understand where you are in your code. So there is less chance you get confused about your location in complicated code.
