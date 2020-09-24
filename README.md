@@ -5,18 +5,26 @@ in the status bar of the Atom editor.
 *code-location* works by analyizing the indentation of the edited file.
 Use a code beautifier to make sure your indentation is correct. If the indentation is wrong, *code-location* might not work well.
 
-# Example
+# Example JavaScript
 
 Editor:
 
-![Editor Screenshot](images/Function_screenshot.png)
+![Editor Screenshot](images/Screenshot-js2-example.png)
 
 Status-bar:
 
-![Statusbar Screenshot](images/StatusBarLocation-big.png)
+`class` :arrow_right: `getResult(point)` :arrow_right: `if` :arrow_right: `while` 
 
 As seen in this example, the current cursor is inside a `class`, then within a function called `getResult()`, therein 
 inside an `if`, and lastly inside a `while` loop.
+
+# Example JavaScript
+
+![Editor Screenshot](images/Screenshot-js1-example.png)
+
+# Example Python
+
+![Python Screenshot](images/Screenshot-python-example.png)
 
 # Features
 - You can more easily understand where you are in your code. So there is less chance you get confused about your location in complicated code.
@@ -33,7 +41,7 @@ inside an `if`, and lastly inside a `while` loop.
 
 # Package for `atom` :atom:
 
-![Atom logo](https://dl2.macupdate.com/images/icons256/53196.png?d=1518722998)
+![Atom logo](https://github.githubassets.com/images/icons/emoji/atom.png)
 
 # Enjoy
 
