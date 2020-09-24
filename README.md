@@ -39,6 +39,12 @@ inside an `if`, and lastly inside a `while` loop.
   - https://atom.io/packages/code-location
 
 
-# Package for `atom`
+# Package for `atom` :atom:
 
 ![Atom logo](https://github.githubassets.com/images/icons/emoji/atom.png)
+
+# Enjoy
+
+- If you like it or use it, give it a :star: on :octocat: repo [atom-code-location](https://github.com/Jonny-exe/atom-code-location) and another :star: on :atom: package [code-location](https://atom.io/packages/code-location). Thanks! :heart:
+- Improve it? Contribute and send me a PR.
+
