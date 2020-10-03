@@ -26,6 +26,10 @@ inside an `if`, and lastly inside a `while` loop.
 
 ![Python Screenshot](images/Screenshot-python-example.png)
 
+# Example Bash
+
+![Editor Screenshot](images/Screenshot-bash-example.png)
+
 # Features
 - You can more easily understand where you are in your code. So there is less chance you get confused about your location in complicated code.
 - You can see how much your current line is indented (indentation count).
